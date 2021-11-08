@@ -2,7 +2,7 @@
 
 # Moleculer TypeScript Example App
 
-Buit from [Knawat Moleculer Template](https://github.com/Knawat/knawat-moleculer-template)
+Built from [Knawat Moleculer Template](https://github.com/Knawat/knawat-moleculer-template)
 
 It's demonstarte how to run a simple App with two serive (api, products) buit on [Moleculer Microservices Framework](https://moleculer.services/)
 
