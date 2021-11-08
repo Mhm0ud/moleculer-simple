@@ -4,7 +4,7 @@
 
 Built from [Knawat Moleculer Template](https://github.com/Knawat/knawat-moleculer-template)
 
-It's demonstarte how to run a simple App with two serive (api, products) buit on [Moleculer Microservices Framework](https://moleculer.services/)
+It's demonstrate how to run a simple App with two serive (api, products) buit on [Moleculer Microservices Framework](https://moleculer.services/)
 
 ## Usage
 
