@@ -1,0 +1,63 @@
+steps:
+  # build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t',
+        'gcr.io/$PROJECT_ID/${_PROJECT_IMAGE}:${_BUDDY_EXECUTION_REVISION}',
+        '.',
+      ]
+    timeout: 500s
+  # push container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'gcr.io/$PROJECT_ID/${_PROJECT_IMAGE}:${_BUDDY_EXECUTION_REVISION}',
+      ]
+  # delete a secret
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['delete', 'secret', '${_SECRET_NAME}', '--ignore-not-found=true']
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=${_PROJECT_LOCATION}'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}'
+    # create a secret
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      [
+        'create',
+        'secret',
+        'generic',
+        '${_SECRET_NAME}',
+        '--from-env-file=${_DEPLOY_FOLDER}.secret',
+      ]
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=${_PROJECT_LOCATION}'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}'
+  # delete a configMap
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args: ['delete', 'configmap', '${_ENV_NAME}', '--ignore-not-found=true']
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=${_PROJECT_LOCATION}'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}'
+  # create a configmap
+  - name: 'gcr.io/cloud-builders/kubectl'
+    args:
+      [
+        'create',
+        'configmap',
+        '${_ENV_NAME}',
+        '--from-env-file=${_DEPLOY_FOLDER}.env',
+      ]
+    env:
+      - 'CLOUDSDK_COMPUTE_ZONE=${_PROJECT_LOCATION}'
+      - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLUSTER_NAME}'
+  # deploy container image to GKE
+  - name: 'gcr.io/cloud-builders/gke-deploy'
+    args:
+      - run
+      - --filename=${_DEPLOY_FOLDER}
+      - --image=gcr.io/$PROJECT_ID/${_PROJECT_IMAGE}:${_BUDDY_EXECUTION_REVISION}
+      - --location=${_PROJECT_LOCATION}
+      - --cluster=${_CLUSTER_NAME}

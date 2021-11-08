@@ -1,0 +1,42 @@
+#########################################################
+# products service
+#########################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: products-deployment
+  namespace: __DEPLOYMENT_NAMESPACE__
+  labels:
+    name: products-deployment
+    environment: __DEPLOYMENT_NAMESPACE__
+    app: __APP_NAME__
+spec:
+  selector:
+    matchLabels:
+      app: products
+  replicas: __PRODUCTS_DEPLOYMENT_REPLICA__
+  template:
+    metadata:
+      labels:
+        app: products
+    spec:
+      containers:
+        - name: products
+          image: gcr.io/__PROJECT_ID__/__PROJECT_IMAGE__
+          envFrom:
+            - configMapRef:
+                name: __ENV_NAME__
+            - secretRef:
+                name: __SECRET_NAME__
+          env:
+            - name: SERVICES
+              value: products
+          resources:
+            limits:
+              cpu: __PRODUCTS_CPU_LIMT__
+              memory: __PRODUCTS_RAM_LIMT__
+            requests:
+              cpu: __PRODUCTS_CPU_REQUEST__
+              memory: __PRODUCTS_RAM_REQUEST__
+---
+

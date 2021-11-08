@@ -1,0 +1,17 @@
+name: delete deployment
+on:
+  pull_request:
+    types: [closed]
+jobs:
+  delete_pr:
+    runs-on: ubuntu-latest
+    steps:
+      - id: get-credentials
+        uses: google-github-actions/get-gke-credentials@main
+        with:
+          cluster_name: ${{ secrets.cluster_name }}
+          location: ${{ secrets.cluster_location }}
+          credentials: ${{ secrets.gcp_credentials }}
+
+      - id: delete_all_in_namespace
+        run: helm ls -a -n $(echo $GITHUB_REPOSITORY | cut -f2 -d/)-${{ github.event.number }}-pr | awk 'NR > 1 { print  "-n "$2, $1}' | xargs -L1 helm uninstall

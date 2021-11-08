@@ -1,0 +1,69 @@
+#########################################################
+# Managed Certificate
+#########################################################
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: __CERTIFICATE_MANAGER_NAME__
+  namespace: __DEPLOYMENT_NAMESPACE__
+  labels:
+    name: __CERTIFICATE_MANAGER_NAME__
+spec:
+  domains:
+    - __PROJECT_URL__
+---
+#########################################################
+# FrontendConfig
+#########################################################
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: frontendconfig
+  namespace: __DEPLOYMENT_NAMESPACE__
+  labels:
+    name: frontendconfig
+spec:
+  redirectToHttps:
+    enabled: true
+    responseCodeName: MOVED_PERMANENTLY_DEFAULT
+---
+#########################################################
+# BackendConfig
+#########################################################
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: my-backendconfig
+  namespace: __DEPLOYMENT_NAMESPACE__
+  labels:
+    name: backendconfig
+spec:
+  timeoutSec: 300
+---
+#########################################################
+# ingress
+#########################################################
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "api-ingress"
+  namespace: __DEPLOYMENT_NAMESPACE__
+  labels:
+    name: api-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "__STATIC_IP_NAME__"
+    networking.gke.io/managed-certificates: "__CERTIFICATE_MANAGER_NAME__"
+    networking.gke.io/v1beta1.FrontendConfig: "frontendconfig"
+spec:
+  rules:
+    - host: __PROJECT_URL__
+      http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: api
+                port:
+                  number: 3000
+---

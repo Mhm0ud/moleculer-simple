@@ -1,0 +1,28 @@
+#########################################################
+# Horizontal Pod AutoScaler for products service (K8s >= v1.17)
+#########################################################
+apiVersion: autoscaling/v2beta2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hpa-products
+  namespace: __DEPLOYMENT_NAMESPACE__
+  labels:
+    name: hpa-products
+    environment: __DEPLOYMENT_NAMESPACE__
+    app: __APP_NAME__
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: products-deployment
+  minReplicas: __PRODUCTS_DEPLOYMENT_MIN_REPLICA__
+  maxReplicas: __PRODUCTS_DEPLOYMENT_MAX_REPLICA__
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+---
+

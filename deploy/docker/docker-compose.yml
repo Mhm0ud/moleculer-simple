@@ -1,0 +1,11 @@
+version: '3.3'
+
+services:
+  products:
+    build:
+      context: ../../
+    image: moleculer-knawat
+    restart: always
+    env_file: .env
+    environment:
+      SERVICES: products
