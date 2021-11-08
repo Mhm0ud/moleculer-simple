@@ -151,4 +151,24 @@ export default class APIService extends Service {
    * @param {IncomingRequest} req
    * @returns {Promise}
    */
+  @Method
+  async authorize(
+    ctx: Context<
+      any,
+      {
+        user: string;
+      }
+    >,
+    route: { [key: string]: undefined },
+    req: IncomingRequest
+  ): Promise<any> {
+    // Get the authenticated user.
+    const user = ctx.meta.user;
+    // It check the `auth` property in action schema.
+    if (req.$action.auth === 'required' && !user) {
+      throw new ApiGateway.Errors.UnAuthorizedError('NO_RIGHTS', {
+        error: 'Unauthorized',
+      });
+    }
+  }
 }
