@@ -25,8 +25,7 @@
     "lint:fix": "eslint . --fix",
     "prettier": "prettier . --write",
     "remove:web": "npm remove @types/lodash @types/supertest openapi-types supertest lodash moleculer-web & rm services/api.service.ts utilities/mixins/openapi.mixin.ts deploy/k8s/api-autoscaling.yaml deploy/k8s/products-autoscaling.yaml deploy/k8s/products-deployment.yaml deploy/k8s/k8s.yaml deploy/k8s/api-deployment.yaml",
-    "remove:db": "npm remove @types/mongoose moleculer-db moleculer-db-adapter-mongoose mongoose & rm utilities/models utilities/mixins/mongo.mixin.ts",
-    "prepare": "husky install"
+    "remove:db": "npm remove @types/mongoose moleculer-db moleculer-db-adapter-mongoose mongoose & rm utilities/models utilities/mixins/mongo.mixin.ts"
   },
   "keywords": [
     "moleculer",
@@ -43,7 +42,6 @@
     "@types/supertest": "^2.0.11",
     "dotenv": "^9.0.2",
     "eslint": "^7.26.0",
-    "husky": "^7.0.1",
     "jest": "^26.6.3",
     "jest-cli": "^26.6.3",
     "lint-staged": "^11.1.2",
