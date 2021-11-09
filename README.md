@@ -4,7 +4,7 @@
 
 Built from [Knawat Moleculer Template](https://github.com/Knawat/knawat-moleculer-template)
 
-It's demonstrate how to run a simple App with two serive (api, products) buit on [Moleculer Microservices Framework](https://moleculer.services/)
+It's a microservice Node.js application, It's demonstrate how to run a simple App with two serivces (api, products) buit on [Moleculer Microservices Framework](https://moleculer.services/)
 
 ## Usage
 
@@ -17,7 +17,7 @@ It will return "products.list"
 
 ## Use the docker image
 
-There is a docker image for this project on this [URL](https://hub.docker.com/r/mhm0ud/moleculer)
+There is a docker image for this project Docker Hub you can find it on this [URL](https://hub.docker.com/r/mhm0ud/moleculer)
 
 To run this image run the following command:
 
@@ -31,5 +31,5 @@ It will return "products.list"
 
 ## Services
 
-- **api**: API Gateway services
+- **api**: API Gateway service
 - **products**: Sample service with `list`, `update` and `get` actions.
