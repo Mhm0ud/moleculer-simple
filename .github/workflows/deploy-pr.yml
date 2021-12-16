@@ -17,7 +17,7 @@ jobs:
           IMAGE_REPO_NAME: 'mp'
           GCP_PROJECT: 'knawat-suppliers-dev'
           GCP_JSON_KEY: ${{ secrets.GCP_JSON_KEY }}
-          SERVICES: "api,products"
+          SERVICES: "{api,products}"
           IMAGE_TAGS: "$GITHUB_SHA" 
           cluster_name: "sp-dev"
           cluster_location: "us-central1-c"
