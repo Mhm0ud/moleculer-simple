@@ -1,0 +1,26 @@
+name: "deploy-pr"
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+  
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: deploy-pr
+    steps:
+      - uses: Mhm0ud/github-actions-deploy-moleculer@main
+        with: 
+          command: "delete"
+          BASE_URL: 'test.test.knawat.xyz'
+          DNS_ZONE_NAME: 'knawat-xyz'
+          docker-registry: 'gcr.io'
+          IMAGE_REPO_NAME: 'mp'
+          GCP_PROJECT: 'knawat-suppliers-dev'
+          GCP_JSON_KEY: ${{ secrets.GCP_JSON_KEY }}
+          SERVICES: "api,products"
+          IMAGE_TAGS: "$GITHUB_SHA" 
+          cluster_name: "sp-dev"
+          cluster_location: "us-central1-c"
+          CONTAINER_NAME: "test"
+          MOLECULER_APM_ENABLE: "0"
+
