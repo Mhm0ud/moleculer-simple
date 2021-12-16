@@ -23,4 +23,5 @@ jobs:
           cluster_location: "us-central1-c"
           CONTAINER_NAME: "test"
           MOLECULER_APM_ENABLE: "0"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
