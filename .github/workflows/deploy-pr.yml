@@ -10,7 +10,6 @@ jobs:
     steps:
       - uses: Mhm0ud/github-actions-deploy-moleculer@main
         with: 
-          command: "delete"
           BASE_URL: 'test.test.knawat.xyz'
           DNS_ZONE_NAME: 'knawat-xyz'
           docker-registry: 'gcr.io'
